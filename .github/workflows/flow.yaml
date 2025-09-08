@@ -32,7 +32,7 @@ jobs:
         with:
           context: .
           push: true
-          tags: ${{ secrets.DOCKERHUB_USERNAME }}
+          tags: shubheksam/prod-cn-website:latest
 
   deploy:
     name: Deploy to EC2
