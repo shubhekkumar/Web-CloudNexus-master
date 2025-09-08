@@ -8,7 +8,7 @@ on:
 
 jobs:
   build:
-    name: Build and Push Docker Image
+    name: Build and Push Docker Image with github actions
     runs-on: ubuntu-latest
 
     steps:
