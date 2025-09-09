@@ -8,7 +8,7 @@ on:
 
 jobs:
   build:
-    name: Build and Push Docker Image with GitHub Actions
+    name: Build, Scan, and Push Docker Image
     runs-on: ubuntu-latest
 
     steps:
@@ -26,8 +26,26 @@ jobs:
           username: shubheksam
           password: ${{ secrets.DOCKER_HUB_TOKEN }}
 
-      # Build and push Docker image
-      - name: Build and Push Docker Image
+      # Build Docker image (load locally for Trivy scan)
+      - name: Build Docker image
+        uses: docker/build-push-action@v5
+        with:
+          context: .
+          push: false
+          load: true
+          tags: shubheksam/prod-cn-website:latest
+
+      # Scan image with Trivy
+      - name: Scan image with Trivy
+        uses: aquasecurity/trivy-action@master
+        with:
+          image-ref: shubheksam/prod-cn-website:latest
+          format: table
+          exit-code: 1        # fail job if vulnerabilities found
+          ignore-unfixed: true
+
+      # Push Docker image (only runs if Trivy scan passed)
+      - name: Push Docker image
         uses: docker/build-push-action@v5
         with:
           context: .
