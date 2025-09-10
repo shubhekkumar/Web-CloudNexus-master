@@ -29,7 +29,7 @@ jobs:
         with:
           args: >
             -Dsonar.projectKey=shubhekkumar_Web-CloudNexus-master
-            -Dsonar.projectName=shubhekkumar
+            -Dsonar.projectName=<your_org>
             -Dsonar.sources=.
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
